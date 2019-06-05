@@ -8,23 +8,31 @@ import java.security.interfaces.RSAPublicKey;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
-@Component
+/**
+ * RSA配置
+ * 
+ * @author daibo
+ *
+ */
 @Configuration
 @ConfigurationProperties(prefix = "rsa")
 // PropertySource默认取application.properties
 //@PropertySource(value = "config.properties")
 public class RSAConfig {
-
+	/** 私钥路径 */
 	protected String privateKeyPath;
-
+	/** 公钥路径 */
 	protected String publicKeyPath;
-
+	/** 私钥 */
 	protected PublicKey m_PublicKey;
-
+	/** 公钥 */
 	protected PrivateKey m_PrivateKey;
+
+	public RSAConfig() {
+
+	}
 
 	public void setPrivateKeyPath(String v) {
 		privateKeyPath = v;
@@ -42,6 +50,12 @@ public class RSAConfig {
 		return publicKeyPath;
 	}
 
+	/**
+	 * 获取公钥Modulus
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public BigInteger getPublicModulus() throws IOException {
 		PublicKey key = getPublicKey();
 		if (key instanceof RSAPublicKey) {
@@ -51,6 +65,12 @@ public class RSAConfig {
 		}
 	}
 
+	/**
+	 * 获取公钥
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public PublicKey getPublicKey() throws IOException {
 		if (null == m_PublicKey) {
 			m_PublicKey = RSAUtil
@@ -60,6 +80,12 @@ public class RSAConfig {
 
 	}
 
+	/**
+	 * 获取私钥
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public PrivateKey getPrivateKey() throws IOException {
 		if (null == m_PrivateKey) {
 			m_PrivateKey = RSAUtil

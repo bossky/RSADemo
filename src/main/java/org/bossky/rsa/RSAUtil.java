@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -42,6 +40,13 @@ public class RSAUtil {
 
 	}
 
+	/**
+	 * 从pem中获取PrivateKey
+	 * 
+	 * @param pem
+	 * @return
+	 * @throws IOException
+	 */
 	public static PrivateKey getPrivateKeyFromPem(File pem) throws IOException {
 		BufferedReader br = null;
 		try {
@@ -62,6 +67,13 @@ public class RSAUtil {
 		}
 	}
 
+	/**
+	 * 从base64字节中获取PrivateKey
+	 * 
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 */
 	public static PrivateKey getPrivateKey(byte[] data) throws IOException {
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(data);
 		PrivateKey privateKey;
@@ -74,9 +86,9 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 从pem中获取publicKey
+	 * 从pem中获取PublicKey
 	 * 
-	 * @param path
+	 * @param pem
 	 * @return
 	 * @throws IOException
 	 */
@@ -101,7 +113,7 @@ public class RSAUtil {
 	}
 
 	/**
-	 * 从base64字节中获取publickey
+	 * 从base64字节中获取PublicKey
 	 * 
 	 * @param data
 	 * @return
@@ -236,20 +248,4 @@ public class RSAUtil {
 		return kf;
 	}
 
-	public static void main(String[] args) {
-
-		try {
-			PublicKey publicKey = getPublicKey(Base64.decode(
-					"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy+h9lm1R6tyL3kbC98qj6Z4peB9KJx5oNXxNElXEUF7w4LPbGL814v2ay8J+SDj0rCBs6jOjxEHbIIVhM+U0bLvNpqdn2w01bEXd5iQsSqV8DcVBupwFA9Io6wplB7SkZSoxuGl/ooO7ws15PFedQxWP9dhLOX+LqVgI84kxVw5Mn8V6pnD2s4KKfxz8mzYCxLW3OWNHsxQWZ2E4ymM2XUP/GSO7/7RnfpWQKXLQ96xDI9Y1Ji+S25MJjusXLvJl5rHQx2mvGZLz2TlQ4+NS4Tzjm21ln3Epfv+PYkUHG6YA4NOLXmAjCd66gOY+AAA9Pe57hJ0giof4Cz6M4NZAIQIDAQAB"));
-			System.out.println(publicKey);
-			RSAPublicKey k = (RSAPublicKey) publicKey;
-			BigInteger modulus = k.getModulus();
-			System.out.println(modulus.bitLength());
-			System.out.println(modulus.toString(16));
-			System.out.println(getKeyFactory().getAlgorithm());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 }
