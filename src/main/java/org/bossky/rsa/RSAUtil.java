@@ -52,13 +52,13 @@ public class RSAUtil {
 		try {
 			br = new BufferedReader(new FileReader(pem));
 			String s = br.readLine();
-			String str = "";
+			StringBuilder sb = new StringBuilder();
 			s = br.readLine();
 			while (s.charAt(0) != '-') {
-				str += s + "\r";
+				sb.append(s).append("\r");
 				s = br.readLine();
 			}
-			byte[] data = Base64.decode(str);
+			byte[] data = Base64.decode(sb.toString());
 			return getPrivateKey(data);
 		} finally {
 			if (null != br) {
@@ -97,13 +97,13 @@ public class RSAUtil {
 		try {
 			br = new BufferedReader(new FileReader(pem));
 			String s = br.readLine();
-			String str = "";
+			StringBuilder sb = new StringBuilder();
 			s = br.readLine();
 			while (s.charAt(0) != '-') {
-				str += s + "\r";
+				sb.append(s).append("\r");
 				s = br.readLine();
 			}
-			byte[] data = Base64.decode(str);
+			byte[] data = Base64.decode(sb.toString());
 			return getPublicKey(data);
 		} finally {
 			if (null != br) {

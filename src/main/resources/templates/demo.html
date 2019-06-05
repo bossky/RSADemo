@@ -5,17 +5,17 @@
 <script type="text/javascript" src="RSA_Stripped.js"></script>
 <body>
 </body>
-<form action="submit.do" id="form1">
+<form action="submit.do" id="form1" onsubmit="submitForm()">
 	<input id="password" type="password" name="password" /> 
-	<input type="button" onclick="submitForm()" value="提交" />
+	<input type="submit"  value="提交" />
 </form>
 <script th:inline="javascript">
 var bitLength=[[${bitLength}]];//key长度
 var modulus=[[${modulus}]];//moduls值
 </script>
 <script>
-	//设置字典长度，应大于 bitLength*2 / 16
-	setMaxDigits(bitLength * 2 / 16);
+	//设置字典长度
+	setMaxDigits(265);
 	//构造key，这里不需要加解密指数，所以用10001代替
 	var key = new RSAKeyPair('10001','10001',modulus,bitLength);
 	
@@ -28,7 +28,6 @@ var modulus=[[${modulus}]];//moduls值
 		// 创建一个base-64 编码的 ASCII 字符串
 		var password=window.btoa(encrypt);
 		p.value = password;
-		document.getElementById("form1").submit();
 	}
 	
 </script>
