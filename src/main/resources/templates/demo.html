@@ -1,0 +1,32 @@
+<html>
+<head>
+<script type="text/javascript" src="BigInt.min.js"></script>
+<script type="text/javascript" src="Barrett.min.js"></script>
+<script type="text/javascript" src="RSA_Stripped.js"></script>
+<body>
+</body>
+<form action="submit.do" id="form1">
+	<input id="password" type="password" name="password"/> 
+	<input type="button" onclick="submitForm()" value="提交" />
+</form>
+<script th:inline="javascript">
+var bitLength=[[${bitLength}]];
+var modulus=[[${modulus}]]
+</script>
+<script>
+	setMaxDigits(262);
+	var key = new RSAKeyPair('10001','10001',modulus,bitLength);
+	function submitForm() {
+		var p=document.getElementById("password");
+		password = encryptedString(key, p.value, RSAAPP.PKCS1Padding,
+				RSAAPP.RawEncoding);
+		password=window.btoa(password);
+		p.value=password;
+		document.getElementById("form1").submit();
+	}
+	
+
+</script>
+</head>
+
+</html>
