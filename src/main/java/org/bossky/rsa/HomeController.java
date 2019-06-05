@@ -2,6 +2,7 @@ package org.bossky.rsa;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URLDecoder;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class HomeController {
 				org.bouncycastle.util.encoders.Base64.decode(password), config.getPrivateKey());
 		password = new String(data);
 		_Logger.info("解密后:" + password);
+		password = URLDecoder.decode(password, "UTF-8");
+		_Logger.info("URL解码后:" + password);
 		model.addAttribute("password", password);
 		return "result";
 	}
